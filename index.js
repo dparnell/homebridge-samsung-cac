@@ -13,10 +13,10 @@ function operation_mode_to_cooling_state(state) {
     if(state.power == cac.PowerMode.Off) {
         return Characteristic.CurrentHeatingCoolingState.OFF;
     }
-    if(state.mode == cac.OperationMode.Cool) {
+    if(state.operation == cac.OperationMode.Cool) {
         return Characteristic.CurrentHeatingCoolingState.COOL;
     }
-    if(state.mode == cac.OperationMode.Heat) {
+    if(state.operation == cac.OperationMode.Heat) {
         return Characteristic.CurrentHeatingCoolingState.HEAT;
     }
 
@@ -128,6 +128,7 @@ class Airconditioner {
                     } else {
                         let new_op = value == Characteristic.CurrentHeatingCoolingState.HEAT ? cac.OperationMode.Heat : cac.OperationMode.Cool;
                         this.conn.controlDevice(dev.duid, {power: cac.PowerMode.On, op: new_op}).then((_) => {
+                            dev.state.operation = new_op;
                             callback(null);
                         });
                     }
