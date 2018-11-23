@@ -38,18 +38,7 @@ class Airconditioner {
         this.coolingThresholdTemperature = 24;
 
         this.temperatureDisplayUnits = Characteristic.TemperatureDisplayUnits.CELSIUS;
-
-        // The value property of CurrentHeatingCoolingState must be one of the following:
-        //Characteristic.CurrentHeatingCoolingState.OFF = 0;
-        //Characteristic.CurrentHeatingCoolingState.HEAT = 1;
-        //Characteristic.CurrentHeatingCoolingState.COOL = 2;
         this.currentHeatingCoolingState = Characteristic.CurrentHeatingCoolingState.OFF;
-
-        // The value property of TargetHeatingCoolingState must be one of the following:
-        //Characteristic.TargetHeatingCoolingState.OFF = 0;
-        //Characteristic.TargetHeatingCoolingState.HEAT = 1;
-        //Characteristic.TargetHeatingCoolingState.COOL = 2;
-        //Characteristic.TargetHeatingCoolingState.AUTO = 3;
         this.targetHeatingCoolingState = Characteristic.TargetHeatingCoolingState.OFF;
 
         this.thermostatService = new Service.Thermostat(this.name);
@@ -65,6 +54,11 @@ class Airconditioner {
                 this.conn.debug_log = this.log;
                 this.conn.connect().then((c) => {
                     this.log("Logging in...");
+
+                    c.Disconnected.on(() => {
+                        this.device = null;
+                    });
+
                     c.login(this.token).then((_) => {
                         this.log("Fetching device list...");
                         c.deviceList().then((devs) => {
@@ -76,6 +70,8 @@ class Airconditioner {
                         });
                     });
                 });
+            }).catch(() => {
+                this.device = null;
             });
         }
 
