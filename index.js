@@ -60,11 +60,16 @@ class Airconditioner {
     getDevice() {
         if(!this.device) {
             this.device = new Promise((resolve, reject) => {
+                this.log("Connecting to ", this.host);
                 this.conn = new cac.Connection(this.host);
                 this.conn.connect().then((c) => {
+                    this.log("Logging in...");
                     c.login(this.token).then((_) => {
+                        this.log("Fetching device list...");
                         c.deviceList().then((devs) => {
+                            this.log("Found device", devs[0].duid);
                             c.deviceState(devs[0].duid).then((dev) => {
+                                this.log("Fetched initial device state:", JSON.stringify(dev.state));
                                 resolve(dev);
                             });
                         });
