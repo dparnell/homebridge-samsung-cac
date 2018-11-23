@@ -62,6 +62,7 @@ class Airconditioner {
             this.device = new Promise((resolve, reject) => {
                 this.log("Connecting to ", this.host);
                 this.conn = new cac.Connection(this.host);
+                this.conn.debug_log = this.log;
                 this.conn.connect().then((c) => {
                     this.log("Logging in...");
                     c.login(this.token).then((_) => {
