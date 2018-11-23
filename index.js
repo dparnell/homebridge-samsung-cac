@@ -1,4 +1,4 @@
-import * as cac from "samsung-cac";
+const cac = requrie("samsung-cac");
 
 let Service, Characteristic;
 
@@ -97,6 +97,18 @@ class Airconditioner {
             .on('set', (value, callback) => {
                 this.log('SET CurrentHeatingCoolingState from', this.currentHeatingCoolingState, 'to', value);
                 this.currentHeatingCoolingState = value;
+                callback(null);
+            });
+
+        // Off, Heat, Cool, Auto
+        this.thermostatService
+            .getCharacteristic(Characteristic.TargetHeatingCoolingState)
+            .on('get', callback => {
+                this.log('TargetHeatingCoolingState:', this.targetHeatingCoolingState);
+                callback(null, this.targetHeatingCoolingState);
+            })
+            .on('set', (value, callback) => {
+                this.log('SET TargetHeatingCoolingState from', this.targetHeatingCoolingState, 'to', value);
                 this.targetHeatingCoolingState = value;
                 this.getDevice().then((dev) => {
                     if(value == Characteristic.CurrentHeatingCoolingState.OFF) {
@@ -114,21 +126,6 @@ class Airconditioner {
                         });
                     }
                 });
-
-            });
-
-        // Off, Heat, Cool, Auto
-        this.thermostatService
-            .getCharacteristic(Characteristic.TargetHeatingCoolingState)
-            .on('get', callback => {
-                this.log('TargetHeatingCoolingState:', this.targetHeatingCoolingState);
-                callback(null, this.targetHeatingCoolingState);
-            })
-            .on('set', (value, callback) => {
-                this.log('SET TargetHeatingCoolingState from', this.targetHeatingCoolingState, 'to', value);
-                this.targetHeatingCoolingState = value;
-                this.updateSystem();
-                callback(null);
             });
 
         // Current Temperature
