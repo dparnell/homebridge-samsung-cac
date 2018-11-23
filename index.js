@@ -1,4 +1,4 @@
-const cac = requrie("samsung-cac");
+const cac = require("samsung-cac");
 
 let Service, Characteristic;
 
