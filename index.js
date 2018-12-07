@@ -59,6 +59,11 @@ class Airconditioner {
                         this.device = null;
                     });
 
+                    c.Error.on((_c, error) => {
+                        this.device = null;
+                        this.log("Connection error: ", error);
+                    });
+
                     c.login(this.token).then((_) => {
                         this.log("Fetching device list...");
                         c.deviceList().then((devs) => {
