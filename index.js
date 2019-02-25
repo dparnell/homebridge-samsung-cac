@@ -44,6 +44,7 @@ class Airconditioner {
         this.thermostatService = new Service.Thermostat(this.name);
         this.fanService = new Service.Fan(`${this.name} Fan`);
         this.device = null;
+        this.timeout = null;
     }
 
     getDevice() {
@@ -79,6 +80,18 @@ class Airconditioner {
                 this.device = null;
             });
         }
+
+        if(this.timeout) {
+            clearTimeout(this.timeout);
+        }
+        this.timeout = setTimeout(() => {
+            // disconnect if we don't make any requests for 5 minutes
+            let d = this.device;
+            this.timeout = null;
+            this.device = null;
+
+            d.disconnect();
+        }, 5 * 60 * 1000);
 
         return this.device;
     }
