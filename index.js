@@ -58,10 +58,12 @@ class Airconditioner {
 
                     c.Disconnected.on(() => {
                         this.device = null;
+                        this.conn = null;
                     });
 
                     c.Error.on((_c, error) => {
                         this.device = null;
+                        this.conn = null;
                         this.log("Connection error: ", error);
                     });
 
@@ -86,11 +88,13 @@ class Airconditioner {
         }
         this.timeout = setTimeout(() => {
             // disconnect if we don't make any requests for 5 minutes
-            let d = this.device;
-            this.timeout = null;
-            this.device = null;
+            let c = this.conn;
+            if(c) {
+                this.timeout = null;
+                this.device = null;
 
-            d.disconnect();
+                c.disconnect();
+            }
         }, 5 * 60 * 1000);
 
         return this.device;
@@ -192,7 +196,7 @@ class Airconditioner {
                 });
             });
 
-        // °C or °F for units
+        // C or F for units
         this.thermostatService
             .getCharacteristic(Characteristic.TemperatureDisplayUnits)
             .on('get', callback => {
