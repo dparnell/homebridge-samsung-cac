@@ -1,7 +1,7 @@
 {
     "description": "Hombridge plugin for Samsung MIM-H02 CAC Airconditioner controllers",
     "name": "homebridge-samsung-cac",
-    "version": "0.0.4",
+    "version": "0.0.5",
     "main": "index.js",
     "engines": {
         "node": ">=6.12.2",

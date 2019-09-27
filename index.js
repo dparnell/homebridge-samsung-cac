@@ -50,13 +50,14 @@ class Airconditioner {
     getDevice() {
         if(!this.device) {
             this.device = new Promise((resolve, reject) => {
-                this.log("Connecting to ", this.host);
+                this.log("Connecting to:", this.host);
                 this.conn = new cac.Connection(this.host);
                 this.conn.debug_log = this.log;
                 this.conn.connect().then((c) => {
                     this.log("Logging in...");
 
                     c.Disconnected.on(() => {
+                        this.log("Disconnected");
                         this.device = null;
                         this.conn = null;
                     });
@@ -64,7 +65,7 @@ class Airconditioner {
                     c.Error.on((_c, error) => {
                         this.device = null;
                         this.conn = null;
-                        this.log("Connection error: ", error);
+                        this.log("Connection error:", error);
                     });
 
                     c.login(this.token).then((_) => {
@@ -74,11 +75,12 @@ class Airconditioner {
                             c.deviceState(devs[0].duid).then((dev) => {
                                 this.log("Fetched initial device state:", JSON.stringify(dev.state));
                                 resolve(dev);
-                            });
-                        });
-                    });
-                });
-            }).catch(() => {
+                            }).catch(reject);
+                        }).catch(reject);
+                    }).catch(reject);
+                }).catch(reject);
+            }).catch((e) => {
+                this.log("Connection failed:", e);
                 this.device = null;
             });
         }
