@@ -90,6 +90,7 @@ class Airconditioner {
         }
         this.timeout = setTimeout(() => {
             // disconnect if we don't make any requests for 5 minutes
+            this.log("Disconnecting due to inactivity");
             let c = this.conn;
             if(c) {
                 this.timeout = null;
