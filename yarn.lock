@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-samsung-cac@^1.0.4:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/samsung-cac/-/samsung-cac-1.0.4.tgz#fae4562bcd4b8c39962f54ce5606410272d60e4d"
-  integrity sha512-w5NGfJlMdrOfmYNbVVY8jDXwueRnbWj18RfWs3qsI34p+WaeUMhKw8AmIzc1kh2ucGwp/01fEmQ8RMoTevwhtw==
+samsung-cac@^1.0.7:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/samsung-cac/-/samsung-cac-1.0.7.tgz#458385224afa7b71acd644779a2bd59b72d41d65"
+  integrity sha512-fLl7jectuU25GDIm5z3tp/hLLfKS+qByiwARoNKs7mc+DN6qDxCrfKCnYbYthXxZBZ3M1hLdCpIkNt3wtzrSKA==
   dependencies:
     xml2js "^0.4.19"
 
