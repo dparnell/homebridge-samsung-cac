@@ -1,3 +1,6 @@
+This plugin has been replaced by a new one that does not require the `--tls-min-v1.0` trick.
+See here: https://github.com/dparnell/homebridge-samsung-cac-modern
+
 Samsung CAC Homebridge Plugin
 =============================
 
